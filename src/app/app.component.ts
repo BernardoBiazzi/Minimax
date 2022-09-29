@@ -63,16 +63,25 @@ export class AppComponent implements OnInit {
   }
 
   somebodyWins(blocos: Array<any>): boolean {
+
+    // Laterais
     if (blocos[0] == 'O' && blocos[1] == 'O' && blocos[2] == 'O') return true;
-    if (blocos[0] == 'O' && blocos[4] == 'O' && blocos[8] == 'O') return true;
     if (blocos[2] == 'O' && blocos[5] == 'O' && blocos[8] == 'O') return true;
     if (blocos[6] == 'O' && blocos[7] == 'O' && blocos[8] == 'O') return true;
     if (blocos[0] == 'O' && blocos[3] == 'O' && blocos[6] == 'O') return true;
+    // Diagonais
+    if (blocos[0] == 'O' && blocos[4] == 'O' && blocos[8] == 'O') return true;
+    if (blocos[2] == 'O' && blocos[4] == 'O' && blocos[6] == 'O') return true;
+
+    // Laterais
     if (blocos[0] == 'X' && blocos[1] == 'X' && blocos[2] == 'X') return true;
-    if (blocos[0] == 'X' && blocos[4] == 'X' && blocos[8] == 'X') return true;
     if (blocos[2] == 'X' && blocos[5] == 'X' && blocos[8] == 'X') return true;
     if (blocos[6] == 'X' && blocos[7] == 'X' && blocos[8] == 'X') return true;
     if (blocos[0] == 'X' && blocos[3] == 'X' && blocos[6] == 'X') return true;
+    // Diagonais
+    if (blocos[0] == 'X' && blocos[4] == 'X' && blocos[8] == 'X') return true;
+    if (blocos[2] == 'X' && blocos[4] == 'X' && blocos[6] == 'X') return true;
+
     else return false;
   }
 
