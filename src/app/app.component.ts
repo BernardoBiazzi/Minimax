@@ -8,7 +8,7 @@ import { Jogodavelha } from './jogo-da-velha/jogo-da-velha.component';
 })
 export class AppComponent implements OnInit {
 
-  private player = {X: '❌',O: '⭕​'};
+  public player = {X: '❌',O: '⭕​'};
   public whoStarts = this.player.X;
 
   public jogodavelhaInicial: Jogodavelha = {

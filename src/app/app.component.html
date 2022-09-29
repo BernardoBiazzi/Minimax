@@ -7,3 +7,6 @@
   </app-jogo-da-velha>
 </div>
 
+<div class="currentPlayer">
+  {{ this.whoStarts }} jogou, agora é a vez do {{ this.whoStarts == this.player.X ? this.player.O : this.player.X }}
+</div>
