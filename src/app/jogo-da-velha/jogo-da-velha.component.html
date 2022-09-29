@@ -1,4 +1,5 @@
-<div class="jogo-da-velha">
+<div class="jogo-da-velha" [class.border-green-bigger]="jogodavelha.points > 0"
+  [class.border-blue-bigger]="jogodavelha.points < 0">
   <div class="bloco" [class.border-green]="jogodavelha.points > 0"
     [class.border-blue]="jogodavelha.points < 0"
     *ngFor="let bloco of jogodavelha.blocos">{{ bloco || '' }}</div>

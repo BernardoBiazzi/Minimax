@@ -8,24 +8,14 @@ import { Jogodavelha } from './jogo-da-velha/jogo-da-velha.component';
 })
 export class AppComponent implements OnInit {
 
-  public whoStarts = '';
+  private player = {X: '❌',O: '⭕​'};
+  public whoStarts = this.player.X;
 
-  public jogodavelhaInicial = {
-    blocos: [
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-    ],
+  public jogodavelhaInicial: Jogodavelha = {
+    blocos: ['','','','','','','','',''],
     points: 0
   };
 
-  public jogosdavelha: Jogodavelha[] = [];
   public allPossibilities: Jogodavelha[][] = [];
 
   constructor() { }
@@ -39,50 +29,51 @@ export class AppComponent implements OnInit {
     if (jogodavelha.points == -1) return alert('Jogo já selecionado anteriormente');
     if (jogodavelha.points == 0) jogodavelha.points = -1;
 
-    this.whoStarts = this.whoStarts == 'O' ? 'X' : 'O';
-    const Jogodavelha = jogodavelha;
+    this.whoStarts = (this.whoStarts == this.player.X) ? this.player.O : this.player.X;
+
     let emptySpaces: number[] = [];
-
-    jogodavelha.blocos.forEach((space: any, index: number) => {
-      if (space == undefined) emptySpaces.push(index);
+    jogodavelha.blocos.forEach((space: string, index: number) => {
+      if (space == '') emptySpaces.push(index);
     });
-
-    let newJogosDaVelha: Jogodavelha[] = [];
 
     if (emptySpaces) {
 
+      let newJogosDaVelha: Jogodavelha[] = [];
+
       emptySpaces.forEach((emptySpace) => {
-        let blocos = [...Jogodavelha.blocos]
+        let blocos = [...jogodavelha.blocos];
         blocos[emptySpace] = this.whoStarts;
-        let newJogoDaVelha = {blocos: blocos, points: this.somebodyWins(blocos) ? 1 : 0};
+        const newJogoDaVelha = {
+          blocos: blocos,
+          points: this.somebodyWins(blocos) ? 1 : 0
+        };
         newJogosDaVelha.push(newJogoDaVelha);
       });
 
       this.allPossibilities.push(newJogosDaVelha);
-    }
+
+    } else { alert('Jogo encerrado'); }
+
   }
 
-  somebodyWins(blocos: Array<any>): boolean {
+  somebodyWins(blocos: Array<string>): boolean {
+    return this.checkWinByPlayer(blocos, this.player.O) || this.checkWinByPlayer(blocos, this.player.X);
+  }
 
+  checkWinByPlayer(blocos: Array<string>, player: string): boolean {
     // Laterais
-    if (blocos[0] == 'O' && blocos[1] == 'O' && blocos[2] == 'O') return true;
-    if (blocos[2] == 'O' && blocos[5] == 'O' && blocos[8] == 'O') return true;
-    if (blocos[6] == 'O' && blocos[7] == 'O' && blocos[8] == 'O') return true;
-    if (blocos[0] == 'O' && blocos[3] == 'O' && blocos[6] == 'O') return true;
+    if (blocos[0] == player && blocos[1] == player && blocos[2] == player) return true;
+    if (blocos[2] == player && blocos[5] == player && blocos[8] == player) return true;
+    if (blocos[6] == player && blocos[7] == player && blocos[8] == player) return true;
+    if (blocos[0] == player && blocos[3] == player && blocos[6] == player) return true;
     // Diagonais
-    if (blocos[0] == 'O' && blocos[4] == 'O' && blocos[8] == 'O') return true;
-    if (blocos[2] == 'O' && blocos[4] == 'O' && blocos[6] == 'O') return true;
+    if (blocos[0] == player && blocos[4] == player && blocos[8] == player) return true;
+    if (blocos[2] == player && blocos[4] == player && blocos[6] == player) return true;
+    // Centrais
+    if (blocos[1] == player && blocos[4] == player && blocos[7] == player) return true;
+    if (blocos[3] == player && blocos[4] == player && blocos[5] == player) return true;
 
-    // Laterais
-    if (blocos[0] == 'X' && blocos[1] == 'X' && blocos[2] == 'X') return true;
-    if (blocos[2] == 'X' && blocos[5] == 'X' && blocos[8] == 'X') return true;
-    if (blocos[6] == 'X' && blocos[7] == 'X' && blocos[8] == 'X') return true;
-    if (blocos[0] == 'X' && blocos[3] == 'X' && blocos[6] == 'X') return true;
-    // Diagonais
-    if (blocos[0] == 'X' && blocos[4] == 'X' && blocos[8] == 'X') return true;
-    if (blocos[2] == 'X' && blocos[4] == 'X' && blocos[6] == 'X') return true;
-
-    else return false;
+    return false;
   }
 
   calculaMelhorOpcao() {

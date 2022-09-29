@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 export interface Jogodavelha {
-  blocos: Array<any>,
+  blocos: Array<string>,
   points: number
 }
 
